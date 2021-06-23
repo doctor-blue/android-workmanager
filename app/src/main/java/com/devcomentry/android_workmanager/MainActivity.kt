@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             btnHandling.visibility = View.VISIBLE
             btnCancel.visibility = View.GONE
             progressBar.visibility = View.GONE
-            btnSeeResult.visibility = View.VISIBLE
         }
     }
 

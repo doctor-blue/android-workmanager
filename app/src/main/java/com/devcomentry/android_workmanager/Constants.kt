@@ -18,3 +18,10 @@ const val NOTIFICATION_ID = 123
 const val RESULT = "result"
 
 const val DELAY_TIME_MILLIS: Long = 3000
+
+const val  NUM_A = "NUM_A"
+const val  NUM_B = "NUM_B"
+const val SUMMATION = "SUMMATION"
+const val SUMMATION_WORK_NAME = "SUMMATION_WORK_NAME"
+
+const val TAG_OUTPUT = "TAG_OUTPUT"
