@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.devcomentry.android_workmanager.databinding.ActivityMainBinding
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,21 +25,43 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             btnCancel.setOnClickListener {
-
+                viewModel.cancelWork()
             }
 
             btnHandling.setOnClickListener {
-                makeStatusNotification("Nothing can come to happen!", this@MainActivity)
+                val numA = abs(edtNumA.text.toString().toInt())
+                val numB = abs(edtNumB.text.toString().toInt())
+                viewModel.add(numA, numB)
 
             }
 
             btnSeeResult.setOnClickListener {
                 val intent = Intent(this@MainActivity, ResultActivity::class.java)
-                intent.putExtra(RESULT, 25)
+                intent.putExtra(RESULT, viewModel.result)
                 startActivity(intent)
-
             }
         }
+
+        viewModel.outputWorkInfos.observe(this, { listOfWorkInfo ->
+            if (listOfWorkInfo.isNullOrEmpty()) {
+                return@observe
+            }
+            val workInfo = listOfWorkInfo[0]
+
+            if (workInfo.state.isFinished) {
+                showWorkFinished()
+
+                val result = workInfo.outputData.getInt(SUMMATION, -1)
+
+                if (result != -1) {
+                    binding.btnSeeResult.visibility = View.VISIBLE
+                    viewModel.result = result
+                }
+
+            } else {
+                showWorkInProgress()
+            }
+        })
     }
 
     private fun showWorkInProgress() {
@@ -55,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             btnHandling.visibility = View.VISIBLE
             btnCancel.visibility = View.GONE
             progressBar.visibility = View.GONE
-            btnSeeResult.visibility = View.VISIBLE
         }
     }
 
