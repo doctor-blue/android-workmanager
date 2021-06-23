@@ -41,7 +41,7 @@ class CalcViewModel(application: Application) : ViewModel() {
     internal fun cancelWork() {
         workManager.cancelUniqueWork(SUMMATION_WORK_NAME)
     }
-2
+
 
     class CalcViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
